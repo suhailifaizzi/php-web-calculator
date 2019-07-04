@@ -1,10 +1,66 @@
+<?php
+    /**
+     * THIS SECTION PROCESSES ANY SUBMITTED CALCULATION BEFORE LOADING THE PAGE
+     */
+
+    // Declare and initialize numbers
+    if(!empty($_GET["initialValue"])){
+        printf("Application noticed there is initial value");
+        $initialValue = $_GET["initialValue"];
+    }else{
+        printf("Application can't find initial value");
+        $initialValue = 0;
+    }
+
+	// If passed value have value, capture into passedValue
+    if(!empty($_GET["insertedValue"])){
+		$insertedValue = $_GET["insertedValue"];
+	}else{
+        $insertedValue = 0;
+    }
+	
+    // Capture operation passed by parameter
+    if(!empty($_GET["operation"])){
+       $operation = $_GET["operation"];
+       printf($operation);
+       
+       	// Addition operation
+        if(strcmp($operation, "addition") == 0){
+            printf($initialValue);
+            printf($insertedValue);
+            $result = $initialValue + $insertedValue;
+            $initialValue = $result;
+            printf($result);
+            printf($initialValue);
+        }
+        // Subtract operation
+        else if(strcmp($operation, "subtraction") == 0){
+            $result = $initialValue - $insertedValue;
+            $initialValue = $result;
+        }
+        // Multiply operations
+        else if(strcmp($operation, "multiplication") == 0){
+            $result = $initialValue * $insertedValue;
+            $initialValue = $result;
+        }
+        // Division operation
+        else if(strcmp($operation, "division") == 0){
+            $result = $initialValue / $insertedValue;
+            $initialValue = $result;
+        }
+        // In case where equals is clicked
+        else{
+            $result = $insertedValue;
+            $initialValue = $result;
+        }
+    }
+
+?>
 <html>
 <title>calculator</title>
 <head><h1><center>Basic Calculator</center></h1></head>
 <body>
 <?php
-    // Declare variables
-    $initialValue;
     $initialIsInfinity = FALSE;
     
     /**
@@ -31,22 +87,19 @@
         $initialValue = 0.0;
     }
 */
-    if(isset($_GET["result"])){
+/*    if(isset($result)){
         printf("Result exist");
         $initialValue = "result";
     } else {
 //        printf("Result doesn't exist.");
         $initialValue = 0;
-    }
-/*    if(strcmp($_GET["result"], "Infinity") == 0){
+        }
+*/
+    if(!empty($result) && strcmp($result, "Infinity") == 0){
         $initialValue = 0.0;
         $initialIsInfinity = TRUE;
-    } else if (isset($_GET["result"]) === true && $$_GET["result"] !== '') {
-        $initialValue = $_GET["result"];
-    } else {
-        $initialValue = 0.0;
     }
-*/
+
 ?>
 <center>
 <?php
