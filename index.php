@@ -3,14 +3,13 @@
      * THIS SECTION PROCESSES ANY SUBMITTED CALCULATION BEFORE LOADING THE PAGE
      */
 
-    // Declare and initialize numbers
+    // Declare and initialize
     if(!empty($_GET["initialValue"])){
         $initialValue = $_GET["initialValue"];
     }else{
         $initialValue = 0;
     }
 
-	// If passed value have value, capture into passedValue
     if(!empty($_GET["insertedValue"])){
 		$insertedValue = $_GET["insertedValue"];
 	}else{
@@ -18,11 +17,19 @@
     }
 	
     // Capture operation passed by parameter
-    if(!empty($_GET["operation"])){
-       $operation = $_GET["operation"];
-       
-       	// Addition operation
-        if(strcmp($operation, "addition") == 0){
+    
+
+    if (!empty($_GET["operation"])){
+        $operation = $_GET["operation"];
+        
+        if(strcmp($operation, "reset") == 0){
+            $result = 0;
+        }
+        else if($initialValue == 0){
+            $result = $insertedValue;
+        }
+        // Addition operation
+        else if(strcmp($operation, "addition") == 0){
             $result = $initialValue + $insertedValue;
             $initialValue = $result;
         }
@@ -47,15 +54,24 @@
                 $result = $initialValue / $insertedValue;
             }
         }
+        else if(strcmp($operation, "equals") == 0){
+            $result = $initialValue;
+        }
         // In case where equals is clicked
         else{
-            $result = $insertedValue;
-        }
+/*            if($initialValue == 0){
+                $result = $insertedValue;
+            }else{
 
+            }
+
+            $result = 0;
+        */        }
         $initialValue = $result;
     }
 
 ?>
+<!-- HTML STARTS HERE! -->
 <html>
 <title>calculator</title>
 <head><h1><center>Basic Calculator</center></h1></head>
@@ -133,7 +149,8 @@
             <td><button name="operation" type="submit" value="division" style="width: 100%; font-weight: bold">&divide</button></td>
         </tr>
         <tr>
-            <td colspan="2"><button value="submit" name="operation" type="submit" style="width: 100%">=</button></td>
+            <td><button name="operation" type="submit" value="equals" style="width: 100%; font-weight: bold">=</button></td>
+            <td><button name="operation" type="submit" value="reset" style="width: 100%; font-weight: bold">CA</button></td>
         </tr>
     </tbody>
 </table>
