@@ -5,10 +5,8 @@
 
     // Declare and initialize numbers
     if(!empty($_GET["initialValue"])){
-        printf("Application noticed there is initial value");
         $initialValue = $_GET["initialValue"];
     }else{
-        printf("Application can't find initial value");
         $initialValue = 0;
     }
 
@@ -22,37 +20,39 @@
     // Capture operation passed by parameter
     if(!empty($_GET["operation"])){
        $operation = $_GET["operation"];
-       printf($operation);
        
        	// Addition operation
         if(strcmp($operation, "addition") == 0){
-            printf($initialValue);
-            printf($insertedValue);
             $result = $initialValue + $insertedValue;
             $initialValue = $result;
-            printf($result);
-            printf($initialValue);
         }
         // Subtract operation
         else if(strcmp($operation, "subtraction") == 0){
             $result = $initialValue - $insertedValue;
-            $initialValue = $result;
         }
         // Multiply operations
         else if(strcmp($operation, "multiplication") == 0){
-            $result = $initialValue * $insertedValue;
-            $initialValue = $result;
+            if ($initialValue == 0){
+                $result = $insertedValue;
+            } else {
+                $result = $initialValue * $insertedValue;
+            }
         }
         // Division operation
         else if(strcmp($operation, "division") == 0){
-            $result = $initialValue / $insertedValue;
-            $initialValue = $result;
+            if( $insertedValue == 0){     
+                echo "<center><h2>Division by 0 is not allowed</h2></center>";
+                $result = $initialValue;
+            } else {
+                $result = $initialValue / $insertedValue;
+            }
         }
         // In case where equals is clicked
         else{
             $result = $insertedValue;
-            $initialValue = $result;
         }
+
+        $initialValue = $result;
     }
 
 ?>
@@ -95,7 +95,7 @@
         $initialValue = 0;
         }
 */
-    if(!empty($result) && strcmp($result, "Infinity") == 0){
+    if(!empty($result) && strcmp($result, "INF") == 0){
         $initialValue = 0.0;
         $initialIsInfinity = TRUE;
     }
